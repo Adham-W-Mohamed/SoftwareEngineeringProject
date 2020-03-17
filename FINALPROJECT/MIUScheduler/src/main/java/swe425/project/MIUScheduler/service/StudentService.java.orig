@@ -12,5 +12,8 @@ public interface StudentService {
 	 Student save(Student student);
 	 Student findOne(Long id);
 	 void delete(Long id);
-     HashMap<String, List<Section>> register(Student student, List<Section> sectionList);
+<<<<<<< HEAD
+=======
+	 HashMap<String, List<Section>> register(Student student, List<Section> sectionList);
+>>>>>>> course-registration
 }
