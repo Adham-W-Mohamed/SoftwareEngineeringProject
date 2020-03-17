@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import swe425.project.MIUScheduler.model.Course;
 import swe425.project.MIUScheduler.model.Student;
 import swe425.project.MIUScheduler.repo.StudentRepository;
-import swe425.project.MIUScheduler.service.SectionService;
 import swe425.project.MIUScheduler.service.StudentService;
 
 
@@ -19,7 +18,6 @@ public class StudentServiceImpl implements StudentService {
 
 
 	private StudentRepository studentRepository;
-	private SectionService sectionService;
 
 	@Autowired
 	public StudentServiceImpl( StudentRepository studentRepository) {
@@ -47,10 +45,6 @@ public class StudentServiceImpl implements StudentService {
 		studentRepository.deleteById(id);
 	}
 
-	@Override
-	public void register(Student student, List<Course> courseList) {
 
-
-	}
 
 }
