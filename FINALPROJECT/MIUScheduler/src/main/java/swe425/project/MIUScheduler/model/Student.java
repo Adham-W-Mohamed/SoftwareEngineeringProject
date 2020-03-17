@@ -1,5 +1,6 @@
 package swe425.project.MIUScheduler.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,14 +14,14 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "students")
+@Table(name = "student")
 public class Student extends User {
 	
 	@Column(unique = true)
 	private Long studentId;
 
 	@ManyToMany
-	private List<Section> sections;
+	private List<Section> sectionList = new ArrayList<>();
 
 	public Long getStudentId() {
 		return studentId;
@@ -52,5 +53,13 @@ public class Student extends User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<Section> getSectionList() {
+		return sectionList;
+	}
+
+	public void setSectionList(List<Section> sectionList) {
+		this.sectionList = sectionList;
 	}
 }

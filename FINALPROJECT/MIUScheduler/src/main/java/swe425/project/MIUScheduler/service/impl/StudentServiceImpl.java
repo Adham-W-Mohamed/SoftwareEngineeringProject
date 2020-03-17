@@ -1,14 +1,17 @@
 package swe425.project.MIUScheduler.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-import swe425.project.MIUScheduler.model.Course;
+import swe425.project.MIUScheduler.model.Section;
 import swe425.project.MIUScheduler.model.Student;
 import swe425.project.MIUScheduler.repo.StudentRepository;
+import swe425.project.MIUScheduler.service.CourseService;
+import swe425.project.MIUScheduler.service.SectionService;
 import swe425.project.MIUScheduler.service.StudentService;
 
 
@@ -18,10 +21,14 @@ public class StudentServiceImpl implements StudentService {
 
 
 	private StudentRepository studentRepository;
+	private CourseService courseService;
+	private SectionService sectionService;
 
 	@Autowired
-	public StudentServiceImpl( StudentRepository studentRepository) {
+	public StudentServiceImpl( StudentRepository studentRepository,CourseService courseService,SectionService sectionService) {
 		this.studentRepository=studentRepository;
+		this.courseService=courseService;
+		this.sectionService=sectionService;
 	}
 	
 
@@ -45,6 +52,23 @@ public class StudentServiceImpl implements StudentService {
 		studentRepository.deleteById(id);
 	}
 
+	@Override
+	public HashMap<String, List<Section>> register(Student student, List<Section> sectionList) {
 
+		List<Section> fullSectionList = this.sectionService.checkCapacity(sectionList);
+		List<Section> coursesMissingPrerequisite = this.courseService.checkPrerequisite(sectionList);
+		HashMap<String, List<Section>> info = new HashMap<>();
+		info.put("capacity",fullSectionList);
+		info.put("prerequisite",coursesMissingPrerequisite);
+
+		if(fullSectionList.size()>0 && coursesMissingPrerequisite.size()>0)
+		{
+			student.setSectionList(sectionList);
+			
+
+		}
+
+
+	}
 
 }
