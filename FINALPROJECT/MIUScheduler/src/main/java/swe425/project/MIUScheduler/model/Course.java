@@ -1,9 +1,6 @@
 package swe425.project.MIUScheduler.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -17,8 +14,18 @@ public class Course {
 	@NotBlank
 	private String courseTitle;
 
-	@NotNull
-	private Integer capacity;
+
+
+	@OneToOne
+	private Course prerequisite;
+
+	public Course getPrerequisite() {
+		return prerequisite;
+	}
+
+	public void setPrerequisite(Course prerequisite) {
+		this.prerequisite = prerequisite;
+	}
 
 	public Integer getCourseId() {
 		return courseId;
@@ -36,18 +43,10 @@ public class Course {
 		this.courseTitle = courseTitle;
 	}
 
-	public Integer getCapacity() {
-		return capacity;
-	}
-
-	public void setCapacity(Integer capacity) {
-		this.capacity = capacity;
-	}
-
-	public Course(@NotBlank String courseTitle, @NotNull Integer capacity) {
+	public Course(@NotBlank String courseTitle) {
 		super();
 		this.courseTitle = courseTitle;
-		this.capacity = capacity;
+
 	}
 
 	public Course() {

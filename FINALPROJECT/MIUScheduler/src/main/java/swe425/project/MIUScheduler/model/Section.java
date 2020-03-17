@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Section {
@@ -31,16 +32,28 @@ public class Section {
 	@ManyToMany(mappedBy = "sections")
 	private List<Student> students;
 
-	public Section(Course course, Block block, Location location, Faculty faculty, List<Student> students) {
+	@NotNull
+	private Integer capacity;
+
+	public Section(Course course, Block block, Location location, Faculty faculty, List<Student> students,Integer capacity) {
 		super();
 		this.course = course;
 		this.block = block;
 		this.location = location;
 		this.faculty = faculty;
 		this.students = students;
+		this.capacity = capacity;
 	}
 
 	public Section() {
+	}
+
+	public Integer getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(Integer capacity) {
+		this.capacity = capacity;
 	}
 
 	public Integer getSectionId() {
