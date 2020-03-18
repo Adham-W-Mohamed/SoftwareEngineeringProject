@@ -41,15 +41,20 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public List<Section> checkPrerequisite(List<Section> sectionList) {
+		int i,j;
 		List<Section> coursesMissingPrerequisite = new ArrayList<>();
-		for (int i = 0; i < sectionList.size(); i++) {
+		for ( i = 0; i < sectionList.size(); i++) {
 			Course course = sectionList.get(i).getCourse();
 			Course prerequisite = course.getPrerequisite();
 			if (prerequisite == null) continue;
 			else {
-				for (int j = 0; j < i; j++)
-					if (sectionList.get(j).equals(prerequisite)) break;
-					else coursesMissingPrerequisite.add(sectionList.get(i));
+				for ( j = 0; j < i; j++)
+				{
+					if (sectionList.get(j).getCourse().equals(prerequisite)) break;
+					System.out.println(course.getCourseTitle()+" "+prerequisite.getCourseTitle());
+	
+				}
+					if(j==i) coursesMissingPrerequisite.add(sectionList.get(i));
 			}
 		}
 

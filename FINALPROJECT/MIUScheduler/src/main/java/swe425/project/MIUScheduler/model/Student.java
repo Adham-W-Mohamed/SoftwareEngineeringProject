@@ -3,7 +3,9 @@ package swe425.project.MIUScheduler.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,14 +16,27 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "student")
+@DiscriminatorValue("S")
 public class Student extends User {
-	
+
 	@Column(unique = true)
 	private Long studentId;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Section> sectionList = new ArrayList<>();
+
+	public Student( String firstName, String lastName, String email) {
+		super(firstName, lastName, email);
+		
+	}
+	
+	
+	
+	public Student() {
+		super();
+	}
+
+
 
 	public Long getStudentId() {
 		return studentId;
@@ -62,4 +77,6 @@ public class Student extends User {
 	public void setSectionList(List<Section> sectionList) {
 		this.sectionList = sectionList;
 	}
+	
+	
 }
