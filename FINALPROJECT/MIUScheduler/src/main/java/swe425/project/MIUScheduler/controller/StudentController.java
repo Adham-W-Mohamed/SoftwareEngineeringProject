@@ -1,6 +1,7 @@
 package swe425.project.MIUScheduler.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import swe425.project.MIUScheduler.model.Section;
 import swe425.project.MIUScheduler.model.Student;
+import swe425.project.MIUScheduler.model.User;
 import swe425.project.MIUScheduler.service.SectionService;
 import swe425.project.MIUScheduler.service.StudentService;
 
@@ -79,14 +81,15 @@ public class StudentController {
 		return modelAndView;
 	}
 	@PostMapping(value = "/register")
-	public String postScheduleForRegistration(@Valid @ModelAttribute("student") Student student,
+	public String postScheduleForRegistration(@Valid @ModelAttribute("sectionList") List<Section> sectionList,
 					   BindingResult result, Model model)  {
 
+		HashMap<String,List<Section>> results = this.studentService.register(User.currentUser,sectionList);
 		if (result.hasErrors()) {
 			model.addAttribute("errors", result.getAllErrors());
 			return "student/edit";
 		}
-		student = studentService.save(student);
+
 		return "redirect:/students";
 	}
 }

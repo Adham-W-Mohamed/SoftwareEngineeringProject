@@ -15,6 +15,8 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 public abstract class User {
 
+	public static Student currentUser;
+
 	@Id
 	@GeneratedValue
 	protected Long userId;

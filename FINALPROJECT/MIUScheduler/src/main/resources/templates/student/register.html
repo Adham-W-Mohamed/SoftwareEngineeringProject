@@ -26,51 +26,12 @@
             </span>
     </div>
     <p>&nbsp;</p>
-    <form class="form-horizontal" th:action="#{'/student/register'}"
-th:object="student" th:method="POST">
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">C.Number</th>
-            <th scope="col">C.Tittle</th>
-            <th scope="col">From</th>
-            <th scope="col">To</th>
-            <th scope="col">By</th>
-            <th scope="col">Prerequisite</th>
-            <th scope="col">select</th>
-            
+
+    <form class="form-horizontal" th:action="#{'/student/register'}" th:object="Arr" th:method="POST">
 
 
-
-
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Alternative non-obstrusive js solution for <tr onclick>:
-            HTML markup: <tr data-href="some-url">
-            JS function using JQuery: $('tr[data-href]').on("click", function() {
-                                        document.location = $(this).data('href');
-                                    });
-         -->
-        <!--<tr class="datarow" th:each="supplier,iterStat : ${suppliers}" th:onclick="@{document.location='/srm/secured/supplier/edit/{supplierId}'(supplierId=${supplier.supplierId})}">-->
-        <tr class="datarow" th:each="section, iterStat : ${sections}" th:onclick="@{document.location='#'}">
-            <th scope="row" th:text="${iterStat.count}+'.'">#</th>
-            <td th:text="${section.course?.courseId}"></td>
-            <td th:text="${section.course?.courseTitle}"></td>
-            <td th:text="${section.block?.start_date}"></td>
-            <td th:text="${section.block?.end_date}"></td>
-
-            <td th:text="${section.faculty.firstName.charAt(0)+' '+section.faculty.lastName}"></td>
-            <td th:text="${section.course?.prerequisite?.courseTitle}"></td>
-
-            <td><input th:id="'chk_' + ${section}"
-         type="checkbox" th:field="*{foundSuppliers.suppliersDTO}" th:value="${section}">
-           </td>       
-            </tr>
-        </tbody>
-    </table>
     </form>
+
 </div>
 
 <div th:replace="fragments/footer :: footer"></div>
