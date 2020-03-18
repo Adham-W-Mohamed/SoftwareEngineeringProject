@@ -2,6 +2,7 @@ package swe425.project.MIUScheduler.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,10 +18,12 @@ public class Section {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer sectionId;
 
+
 	@OneToOne
 	private Course course;
 
 	@OneToOne
+
 	private Block block;
 
 	@OneToOne
@@ -29,19 +32,18 @@ public class Section {
 	@OneToOne
 	private Faculty faculty;
 
-	@ManyToMany(mappedBy = "sections")
+	@ManyToMany(mappedBy = "sectionList")
 	private List<Student> students;
 
 	@NotNull
 	private Integer capacity;
 
-	public Section(Course course, Block block, Location location, Faculty faculty, List<Student> students,Integer capacity) {
-		super();
+	public Section(Course course, Block block, Location location, Faculty faculty, Integer capacity) {
+		
 		this.course = course;
 		this.block = block;
 		this.location = location;
 		this.faculty = faculty;
-		this.students = students;
 		this.capacity = capacity;
 	}
 

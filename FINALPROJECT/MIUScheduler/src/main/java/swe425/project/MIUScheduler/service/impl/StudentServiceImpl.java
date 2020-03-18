@@ -3,6 +3,7 @@ package swe425.project.MIUScheduler.service.impl;
 import java.util.HashMap;
 import java.util.List;
 
+import org.hibernate.validator.internal.constraintvalidators.bv.MinValidatorForCharSequence;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -57,18 +58,19 @@ public class StudentServiceImpl implements StudentService {
 
 		List<Section> fullSectionList = this.sectionService.checkCapacity(sectionList);
 		List<Section> coursesMissingPrerequisite = this.courseService.checkPrerequisite(sectionList);
-		HashMap<String, List<Section>> info = new HashMap<>();
-		info.put("capacity",fullSectionList);
-		info.put("prerequisite",coursesMissingPrerequisite);
+		HashMap<String, List<Section>> infos = new HashMap<>();
+		infos.put("capacity",fullSectionList);
+		infos.put("prerequisite",coursesMissingPrerequisite);
 
-		if(fullSectionList.size()>0 && coursesMissingPrerequisite.size()>0)
+		if(fullSectionList.size()==0 && coursesMissingPrerequisite.size()==0)
 		{
+			sectionList.forEach(section ->section.setCapacity(section.getCapacity()-1));
 			student.setSectionList(sectionList);
-			
+			this.studentRepository.save(student);
 
 		}
 
-
+		return infos;
 	}
 
 }
