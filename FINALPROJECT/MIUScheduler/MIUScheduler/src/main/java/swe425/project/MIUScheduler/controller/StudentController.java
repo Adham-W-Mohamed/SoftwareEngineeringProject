@@ -1,5 +1,6 @@
 package swe425.project.MIUScheduler.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -13,16 +14,25 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import swe425.project.MIUScheduler.model.Section;
 import swe425.project.MIUScheduler.model.Student;
+import swe425.project.MIUScheduler.service.SectionService;
 import swe425.project.MIUScheduler.service.StudentService;
 
 @Controller
 public class StudentController {
 
-	@Autowired
 	private StudentService studentService;
+	private SectionService sectionService;
+
+	@Autowired
+	public StudentController(StudentService studentService,SectionService sectionService) {
+		this.studentService = studentService;
+		this.sectionService = sectionService;
+	}
 
 	@RequestMapping(value = "/student/list", method = RequestMethod.GET)
 	public ModelAndView students() {
@@ -60,6 +70,28 @@ public class StudentController {
 	@RequestMapping(value = "/student/delete/{id}", method = RequestMethod.GET)
 	public String delete(@PathVariable Long id, Model model) {
 		studentService.delete(id);
+		return "redirect:/student/list";
+
+	}
+
+	@GetMapping(value="/register")
+	public ModelAndView getScheduleForRegistration(){
+		List<Section> sections = sectionService.findAll();
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("sections", sections);
+		modelAndView.addObject("selected", new ArrayList<Section>());
+		modelAndView.setViewName("student/register");
+		return modelAndView;
+	}
+	@PostMapping(value = "/register")
+	public String postScheduleForRegistration(@Valid @ModelAttribute("student") Student student,
+					   BindingResult result, Model model)  {
+
+		if (result.hasErrors()) {
+			model.addAttribute("errors", result.getAllErrors());
+			return "student/edit";
+		}
+		student = studentService.save(student);
 		return "redirect:/student/list";
 	}
 }

@@ -1,7 +1,9 @@
 package swe425.project.MIUScheduler.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,8 +22,19 @@ public class Student {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long studentId;
 
-	@ManyToMany
-	private List<Section> sections;
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Section> sections = new ArrayList<>();
+
+	public Student(String firstName, String lastName, String email) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+
+	}
+
+	public Student() {
+
+	}
 
 	public Long getStudentId() {
 		return studentId;
@@ -29,10 +42,6 @@ public class Student {
 
 	public void setStudentId(Long id) {
 		this.studentId = id;
-	}
-
-	public Student() {
-
 	}
 
 	public Student(List<Section> sections, @NotEmpty(message = "*Please provide first name") String firstName,
@@ -81,4 +90,13 @@ public class Student {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public List<Section> getSections() {
+		return sections;
+	}
+
+	public void setSections(List<Section> sections) {
+		this.sections = sections;
+	}
+
 }

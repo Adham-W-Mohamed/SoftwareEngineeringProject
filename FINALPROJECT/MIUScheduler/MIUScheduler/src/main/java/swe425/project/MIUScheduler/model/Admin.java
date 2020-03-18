@@ -1,13 +1,17 @@
 package swe425.project.MIUScheduler.model;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
 public class Admin {
 	
@@ -37,7 +41,6 @@ public class Admin {
 		this.lastName = lastName;
 		this.email = email;
 	}
-
 
 
 
@@ -78,4 +81,7 @@ public class Admin {
 		this.email = email;
 	}
 
+
+
+	
 }

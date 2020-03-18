@@ -10,4 +10,5 @@ public interface SectionService {
 	 Section save(Section section);
 	 Section findOne(Integer id);
 	 void delete(Integer id);
+	List<Section> checkCapacity(List<Section> sectionList);
 }

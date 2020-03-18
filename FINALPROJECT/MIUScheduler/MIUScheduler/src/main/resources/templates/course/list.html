@@ -34,7 +34,7 @@
 				<tr>
 					<th scope="col">#</th>
 					<th scope="col">courseTitle</th>
-					<th scope="col">Capacity</th>
+					
 		
 					<th scope="col">Actions</th>
 
@@ -52,7 +52,7 @@
 					<!--                <tr class="datarow" th:each="course,iterStat : ${courses}" th:onclick="@{document.location='#'}">-->
 					<th scope="row" th:text="${iterStat.count}+'.'">#</th>
 					<td th:text="${course.courseTitle}"></td>
-					<td th:text="${course.capacity}"></td>
+					
 
 
 					<td><a th:href="@{'/course/' + ${course.courseId}}">Edit</a>&nbsp;

@@ -18,6 +18,8 @@ public class Block {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer blockId;
 
+	private String blockTitle;
+
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(unique = true)
@@ -30,7 +32,7 @@ public class Block {
 	
 	@Override
 	public String toString() {
-		return start_date.toString();
+		return blockTitle;
 	}
 
 	public Integer getBlockId() {
@@ -57,11 +59,20 @@ public class Block {
 		this.end_date = end_date;
 	}
 
-	public Block(@NotNull LocalDate start_date,
-			@NotNull(message = "Please enter an end date for the block") LocalDate end_date) {
+	public String getBlockTittle() {
+		return blockTitle;
+	}
+
+	public void setBlockTittle(String blockTittle) {
+		this.blockTitle = blockTittle;
+	}
+
+	public Block(String blockTittle, @NotNull LocalDate start_date,
+				 @NotNull(message = "Please enter an end date for the block") LocalDate end_date) {
 		super();
 		this.start_date = start_date;
 		this.end_date = end_date;
+		this.blockTitle = blockTittle;
 	}
 
 	public Block() {

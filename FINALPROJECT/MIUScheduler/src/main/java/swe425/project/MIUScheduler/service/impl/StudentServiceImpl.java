@@ -3,7 +3,9 @@ package swe425.project.MIUScheduler.service.impl;
 import java.util.HashMap;
 import java.util.List;
 
+import org.hibernate.validator.internal.constraintvalidators.bv.MinValidatorForCharSequence;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import swe425.project.MIUScheduler.model.Section;
@@ -18,15 +20,19 @@ import swe425.project.MIUScheduler.service.StudentService;
 @Service("studentService")
 public class StudentServiceImpl implements StudentService {
 
-	@Autowired
-	StudentRepository studentRepository;
-	
-	@Autowired
-	SectionService sectionService;
+
+	private StudentRepository studentRepository;
+	private CourseService courseService;
+	private SectionService sectionService;
 
 	@Autowired
-	private CourseService courseService;
+	public StudentServiceImpl( StudentRepository studentRepository,CourseService courseService,SectionService sectionService) {
+		this.studentRepository=studentRepository;
+		this.courseService=courseService;
+		this.sectionService=sectionService;
+	}
 	
+
 	@Override
 	public List<Student> findAll() {
 		return studentRepository.findAll();
@@ -46,7 +52,7 @@ public class StudentServiceImpl implements StudentService {
 	public void delete(Long id) {
 		studentRepository.deleteById(id);
 	}
-	
+
 	@Override
 	public HashMap<String, List<Section>> register(Student student, List<Section> sectionList) {
 
@@ -59,7 +65,7 @@ public class StudentServiceImpl implements StudentService {
 		if(fullSectionList.size()==0 && coursesMissingPrerequisite.size()==0)
 		{
 			sectionList.forEach(section ->section.setCapacity(section.getCapacity()-1));
-			student.setSections(sectionList);
+			student.setSectionList(sectionList);
 			this.studentRepository.save(student);
 
 		}

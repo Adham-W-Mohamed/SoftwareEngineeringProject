@@ -1,5 +1,6 @@
 package swe425.project.MIUScheduler.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,17 @@ public class SectionServiceImpl implements SectionService {
 	@Override
 	public void delete(Integer id) {
 		sectionRepository.deleteById(id);
+	}
+	
+	@Override
+	public List<Section> checkCapacity(List<Section> sectionList) {
+		List<Section> fullSectionList = new ArrayList<>();
+		sectionList.stream().filter(section -> section.getCapacity()==0)
+							.forEach(section -> fullSectionList.add(section));
+
+		return fullSectionList;
+
+
 	}
 
 }

@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -17,11 +18,21 @@ public class Course {
 	@NotBlank
 	private String courseTitle;
 
-	@NotNull
-	private Integer capacity;
+	
 
 	public Integer getCourseId() {
 		return courseId;
+	}
+	
+	@OneToOne
+	private Course prerequisite;
+
+	public Course getPrerequisite() {
+		return prerequisite;
+	}
+
+	public void setPrerequisite(Course prerequisite) {
+		this.prerequisite = prerequisite;
 	}
 	
 	
@@ -45,18 +56,12 @@ public class Course {
 		this.courseTitle = courseTitle;
 	}
 
-	public Integer getCapacity() {
-		return capacity;
-	}
+	
 
-	public void setCapacity(Integer capacity) {
-		this.capacity = capacity;
-	}
-
-	public Course(@NotBlank String courseTitle, @NotNull Integer capacity) {
-		super();
+	public Course(@NotBlank String courseTitle) {
+		
 		this.courseTitle = courseTitle;
-		this.capacity = capacity;
+		
 	}
 
 	public Course() {
